@@ -41,15 +41,15 @@ cd /path/to/project2
 
 ## 3. Demo User Accounts
 
-All seeded accounts use the universal password: **`pin1234`**
+The system seeds default test accounts for all standard logistics roles:
 
-| Role | Username | Password | Purpose & Capabilities |
-|---|---|---|---|
-| 👑 **Admin** | **`admin`** | `pin1234` | Full access: Evaluation Measures & Reasoning, Master Tables, Baseline configuration, User Management |
-| 🧑‍💼 **Operations** | **`ops`** | `pin1234` | Exception Queue, Priority Dock Scheduler, Penalties & Policies |
-| 🏭 **Warehouse** | **`warehouse.jai`** / `warehouse.ggn` | `pin1234` | Review Soft-Holds, Approve / Reject Appointments, Inbound Dock Status |
-| 🚛 **Driver** | **`driver.ravi`** / `driver.amit` | `pin1234` | Exception Reporting, Verified Slot Booking, Live GPS Dual ETA |
-| 🏢 **Carrier** | **`carrier.bluedart`** / `carrier.vtrans` | `pin1234` | Inbound Shipments, Carrier Analytics, Operational Messaging |
+| Role | Username | Purpose & Capabilities |
+|---|---|---|
+| 👑 **Admin** | **`admin`** | Full access: Evaluation Measures & Reasoning, Master Tables, Baseline configuration, User Management |
+| 🧑‍💼 **Operations** | **`ops`** | Exception Queue, Priority Dock Scheduler, Penalties & Policies |
+| 🏭 **Warehouse** | **`warehouse.jai`** / `warehouse.ggn` | Review Soft-Holds, Approve / Reject Appointments, Inbound Dock Status |
+| 🚛 **Driver** | **`driver.ravi`** / `driver.amit` | Exception Reporting, Verified Slot Booking, Live GPS Dual ETA |
+| 🏢 **Carrier** | **`carrier.bluedart`** / `carrier.vtrans` | Inbound Shipments, Carrier Analytics, Operational Messaging |
 
 ---
 

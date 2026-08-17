@@ -17,7 +17,7 @@
 | 📊 **AWS CloudWatch Dashboard** | **[SetuHaul-Operations Live Dashboard](https://us-east-1.console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=SetuHaul-Operations)** | Real-time AWS metric graphs for all 6 challenge measures |
 | 🩺 **Health Check API** | **[http://100.27.41.46/api/health](http://100.27.41.46/api/health)** | Live service heartbeat & LangSmith configuration status |
 
-### Demo Accounts (Password for all: `pin1234`)
+### Demo Accounts
 * **Admin**: `admin` *(Access to Evaluation Measures & Reasoning, Master Tables, Baseline Management)*
 * **Operations**: `ops` *(Exception Queue, Facility Dock Scheduler, Penalty Approvals)*
 * **Warehouse Manager**: `warehouse.jai` / `warehouse.ggn` *(Review Soft-Holds & Confirm Appointments)*
