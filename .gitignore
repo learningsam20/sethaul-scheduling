@@ -1,0 +1,93 @@
+# ==========================================
+# SetuHaul Git Ignore Configuration
+# ==========================================
+
+# Environment & Secrets (Keep .env.example tracked)
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+
+# Operating System Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# Python & Virtual Environments
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+ENV/
+env/
+backend/.venv/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Testing, Coverage & Type Checking
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+
+# Node.js & Frontend Builds
+node_modules/
+frontend/node_modules/
+frontend/dist/
+dist/
+*.tar.gz
+*.zip
+*.tar
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.turbo
+.vite/
+
+# Database Files & SQLite WAL (Preserve schema and seed)
+data/*.db
+data/*.db-*
+data/*.sqlite
+data/*.sqlite3
+*.db-shm
+*.db-wal
+
+# IDEs & Editor Configurations
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+*.sublime-project
+*.sublime-workspace
+
+# Cloud & Deploy Artifacts
+.aws-sam/
+cdk.out/

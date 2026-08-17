@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="SetuHaul">
+  <defs>
+    <linearGradient id="g" x1="8" y1="4" x2="56" y2="60" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0f6b5c"/>
+      <stop offset="1" stop-color="#1f8f7a"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="url(#g)"/>
+  <path d="M12 36h16l4-10h8l4 10h8" fill="none" stroke="#f4fffb" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="22" cy="42" r="3.2" fill="#f4fffb"/>
+  <circle cx="46" cy="42" r="3.2" fill="#f4fffb"/>
+  <path d="M18 22c6-8 22-8 28 0" fill="none" stroke="#b7f0e4" stroke-width="2.4" stroke-linecap="round"/>
+  <path d="M24 18c4-4 12-4 16 0" fill="none" stroke="#b7f0e4" stroke-width="2" stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,49 @@
+{
+  "widgets": [
+    {
+      "type": "metric",
+      "properties": {
+        "title": "SetuHaul Agent Health & Autonomy",
+        "metrics": [
+          ["SetuHaul/Agent", "Trust", "Facility", "NETWORK"],
+          [".", "Autonomy", ".", "."],
+          [".", "Fit", ".", "."],
+          [".", "SelfServiceRate", ".", "."],
+          [".", "HumanHelpRate", ".", "."]
+        ],
+        "view": "timeSeries",
+        "region": "ap-south-1",
+        "stat": "Average",
+        "period": 300
+      }
+    },
+    {
+      "type": "metric",
+      "properties": {
+        "title": "Resolution Speed & Quality (ETA Error / Wait Reduced / Resolve Time)",
+        "metrics": [
+          ["SetuHaul/Agent", "AvgResolveMin", "Facility", "NETWORK"],
+          [".", "AvgEtaErrorMin", ".", "."],
+          [".", "AvgWaitReducedMin", ".", "."]
+        ],
+        "view": "timeSeries",
+        "region": "ap-south-1",
+        "stat": "Average",
+        "period": 300
+      }
+    },
+    {
+      "type": "metric",
+      "properties": {
+        "title": "Case Throughput & Load",
+        "metrics": [
+          ["SetuHaul/Agent", "Cases", "Facility", "NETWORK"]
+        ],
+        "view": "singleValue",
+        "region": "ap-south-1",
+        "stat": "Sum",
+        "period": 300
+      }
+    }
+  ]
+}

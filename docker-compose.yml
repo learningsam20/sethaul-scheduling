@@ -1,0 +1,12 @@
+services:
+  setuhaul:
+    build: .
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    volumes:
+      - ./data:/app/data
+      - ./database:/app/database
+    environment:
+      - DATABASE_PATH=/app/data/setuhaul_freight_operations.db

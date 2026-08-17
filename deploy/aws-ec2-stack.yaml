@@ -1,0 +1,250 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'SetuHaul Freight Operations - 100% AWS Free Tier Stack (EC2 + Docker + ECR + LangSmith Tracing)'
+
+Parameters:
+  ImageUri:
+    Type: String
+    Description: Full URI of the container image in ECR (e.g. 123456789012.dkr.ecr.us-east-1.amazonaws.com/setuhaul-app:latest)
+  LatestAmiId:
+    Type: 'AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>'
+    Default: '/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-x86_64'
+    Description: Amazon Linux 2023 AMI ID from SSM Parameter Store.
+  InstanceType:
+    Type: String
+    Default: t2.micro
+    AllowedValues:
+      - t2.micro
+      - t3.micro
+      - t4g.small
+    Description: EC2 instance type (t2.micro / t3.micro are AWS Free Tier eligible).
+  KeyName:
+    Type: String
+    Default: ''
+    Description: (Optional) SSH Key Pair name to access the instance.
+  OpenRouterApiKey:
+    Type: String
+    NoEcho: true
+    Default: ''
+    Description: (Optional) OpenRouter / Bedrock API key for LLM agent.
+  OpenRouterBaseUrl:
+    Type: String
+    Default: 'https://bedrock-mantle.us-east-1.api.aws/v1'
+    Description: Base URL for OpenAI/OpenRouter/Bedrock compatible endpoint.
+  OpenRouterModel:
+    Type: String
+    Default: 'zai.glm-4.7-flash'
+    Description: LLM Model identifier.
+  GeoapifyApiKey:
+    Type: String
+    NoEcho: true
+    Default: ''
+    Description: (Optional) Geoapify API key for route ETA calculations.
+  LangsmithApiKey:
+    Type: String
+    NoEcho: true
+    Default: ''
+    Description: (Optional) LangSmith API key for agent tracing.
+  LangchainTracingV2:
+    Type: String
+    Default: 'true'
+    Description: Enable LangChain/LangSmith v2 tracing.
+  LangsmithProject:
+    Type: String
+    Default: 'SETUHAUL'
+    Description: LangSmith project name.
+  JwtSecret:
+    Type: String
+    NoEcho: true
+    Default: 'setuhaul-dev-secret-change-me'
+    Description: JWT Secret for authentication.
+
+Conditions:
+  HasKeyName: !Not [!Equals [!Ref KeyName, '']]
+
+Resources:
+  # Networking
+  VPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.0.0.0/16
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+      Tags:
+        - Key: Name
+          Value: SetuHaul-VPC
+
+  InternetGateway:
+    Type: AWS::EC2::InternetGateway
+    Properties:
+      Tags:
+        - Key: Name
+          Value: SetuHaul-IGW
+
+  VPCGatewayAttachment:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      VpcId: !Ref VPC
+      InternetGatewayId: !Ref InternetGateway
+
+  PublicSubnet:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      CidrBlock: 10.0.1.0/24
+      MapPublicIpOnLaunch: true
+      AvailabilityZone: !Select [0, !GetAZs '']
+      Tags:
+        - Key: Name
+          Value: SetuHaul-PublicSubnet
+
+  RouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref VPC
+      Tags:
+        - Key: Name
+          Value: SetuHaul-PublicRouteTable
+
+  PublicRoute:
+    Type: AWS::EC2::Route
+    DependsOn: VPCGatewayAttachment
+    Properties:
+      RouteTableId: !Ref RouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId: !Ref InternetGateway
+
+  SubnetRouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref PublicSubnet
+      RouteTableId: !Ref RouteTable
+
+  # Security Group
+  InstanceSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Enable HTTP on 80 and SSH on 22
+      VpcId: !Ref VPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 8000
+          ToPort: 8000
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0
+      Tags:
+        - Key: Name
+          Value: SetuHaul-SecurityGroup
+
+  # IAM Role for EC2 (ECR Pull + SSM Management + CloudWatch Metrics & Logs)
+  InstanceRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: [ec2.amazonaws.com]
+            Action: ['sts:AssumeRole']
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly
+        - arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+      Policies:
+        - PolicyName: SetuHaulEC2CloudWatchPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - 'cloudwatch:PutMetricData'
+                  - 'cloudwatch:GetMetricData'
+                  - 'cloudwatch:ListMetrics'
+                  - 'logs:CreateLogGroup'
+                  - 'logs:CreateLogStream'
+                  - 'logs:PutLogEvents'
+                Resource: '*'
+
+  InstanceProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      Roles:
+        - !Ref InstanceRole
+
+  # EC2 Instance
+  SetuHaulInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: !Ref InstanceType
+      KeyName: !If [HasKeyName, !Ref KeyName, !Ref 'AWS::NoValue']
+      IamInstanceProfile: !Ref InstanceProfile
+      SubnetId: !Ref PublicSubnet
+      SecurityGroupIds:
+        - !Ref InstanceSecurityGroup
+      ImageId: !Ref LatestAmiId
+      BlockDeviceMappings:
+        - DeviceName: /dev/xvda
+          Ebs:
+            VolumeSize: 20
+            VolumeType: gp3
+            DeleteOnTermination: true
+      Tags:
+        - Key: Name
+          Value: SetuHaul-App-Server
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          set -e
+          dnf update -y || yum update -y
+          dnf install -y docker git aws-cli || yum install -y docker git awscli
+          systemctl start docker
+          systemctl enable docker
+          usermod -aG docker ec2-user
+
+          mkdir -p /opt/setuhaul/data
+          cd /opt/setuhaul
+
+          cat << 'EOF' > /opt/setuhaul/.env
+          APP_NAME=SetuHaul
+          HOST=0.0.0.0
+          PORT=8000
+          CORS_ORIGINS=*
+          CLASSROOM_NOW=2026-08-04T09:40:00+05:30
+          DATABASE_PATH=/app/data/setuhaul_freight_operations.db
+          JWT_SECRET=${JwtSecret}
+          OPENROUTER_API_KEY=${OpenRouterApiKey}
+          OPENROUTER_BASE_URL=${OpenRouterBaseUrl}
+          OPENROUTER_MODEL=${OpenRouterModel}
+          GEOAPIFY_API_KEY=${GeoapifyApiKey}
+          LANGSMITH_API_KEY=${LangsmithApiKey}
+          LANGCHAIN_TRACING_V2=${LangchainTracingV2}
+          LANGSMITH_PROJECT=${LangsmithProject}
+          AWS_REGION=${AWS::Region}
+          EOF
+
+          # Authenticate with ECR and pull image
+          aws ecr get-login-password --region ${AWS::Region} | docker login --username AWS --password-stdin ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com
+          docker pull ${ImageUri}
+
+          # Run container mapped to port 80 with persistent local volume
+          docker run -d \
+            --name setuhaul \
+            --restart always \
+            -p 80:8000 \
+            --env-file /opt/setuhaul/.env \
+            -v /opt/setuhaul/data:/app/data \
+            ${ImageUri}
+
+Outputs:
+  InstancePublicIP:
+    Description: Public IP of SetuHaul server
+    Value: !GetAtt SetuHaulInstance.PublicIp
+  AppURL:
+    Description: Web application URL
+    Value: !Sub 'http://${SetuHaulInstance.PublicIp}'
