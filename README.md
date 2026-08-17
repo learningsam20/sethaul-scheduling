@@ -15,7 +15,6 @@
 
 <p align="center">
   <a href="http://100.27.41.46"><img src="https://img.shields.io/badge/Live_Demo-AWS_EC2-007EC6?style=for-the-badge&logo=amazon-aws" alt="Live Demo" /></a>
-  <a href="https://youtu.be/PbZfW4ShMTg"><img src="https://img.shields.io/badge/Video-Demo_on_YouTube-FF0000?style=for-the-badge&logo=youtube" alt="YouTube Demo" /></a>
   <a href="https://us-east-1.console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=SetuHaul-Operations"><img src="https://img.shields.io/badge/CloudWatch-Dashboard-FF9900?style=for-the-badge&logo=amazon-cloudwatch" alt="CloudWatch" /></a>
   <a href="docs/ARCHITECTURE.md"><img src="https://img.shields.io/badge/Stack-FastAPI%20%7C%20React%20%7C%20LangGraph%20%7C%20SQLite-22c55e?style=for-the-badge" alt="Stack" /></a>
   <a href="docs/SETUP.md"><img src="https://img.shields.io/badge/Tests-15%2F15%20Passed-success?style=for-the-badge" alt="Tests" /></a>
