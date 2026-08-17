@@ -42,6 +42,7 @@ gantt
 
 ## 2. Phase 2: Operational Enhancements (Near-Term 🔄)
 
+- [ ] **ROI & Cost-of-Delay Calculation**: Quantify dollar-value savings per resolved exception (driver detention cost, dock idle cost, SLA penalty avoided) and surface a live ROI counter on the admin dashboard.
 - [ ] **ELD / Telematics Webhook Ingestion**: Ingest live GPS coordinates and engine diagnostics from Samsara, Geotab, or Trimble devices automatically.
 - [ ] **Automated Penalty & SLA Enforcement**: Automated detention fee calculation and dispute resolution workflows for chronic carrier delays.
 - [ ] **Omnichannel Driver Interface**: Expand beyond web chat to native **WhatsApp Business API** and two-way SMS interfaces for drivers on the road.

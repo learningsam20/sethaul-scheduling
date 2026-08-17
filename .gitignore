@@ -91,3 +91,11 @@ data/*.sqlite3
 # Cloud & Deploy Artifacts
 .aws-sam/
 cdk.out/
+
+# Large binary assets — tracked via Git LFS or external hosting
+assets/setuhaul_demo.mp4
+assets/setuhaul_demo_presentation.html
+assets/setuhaul_demo_presentation.pdf
+assets/video_frames/
+assets/slide_frames/
+assets/setuhaul_er_diagram_core.png
