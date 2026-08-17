@@ -142,6 +142,13 @@ Resources:
         - Key: Name
           Value: SetuHaul-SecurityGroup
 
+  # CloudWatch Log Group for application logs
+  ApplicationLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub '/aws/setuhaul/${AWS::StackName}'
+      RetentionInDays: 7
+
   # IAM Role for EC2 (ECR Pull + SSM Management + CloudWatch Metrics & Logs)
   InstanceRole:
     Type: AWS::IAM::Role
@@ -232,11 +239,15 @@ Resources:
           aws ecr get-login-password --region ${AWS::Region} | docker login --username AWS --password-stdin ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com
           docker pull ${ImageUri}
 
-          # Run container mapped to port 80 with persistent local volume
+          # Run container mapped to port 80 with persistent local volume and CloudWatch logging
           docker run -d \
             --name setuhaul \
             --restart always \
             -p 80:8000 \
+            --log-driver=awslogs \
+            --log-opt awslogs-group=/aws/setuhaul/${AWS::StackName} \
+            --log-opt awslogs-stream=app \
+            --log-opt awslogs-region=${AWS::Region} \
             --env-file /opt/setuhaul/.env \
             -v /opt/setuhaul/data:/app/data \
             ${ImageUri}

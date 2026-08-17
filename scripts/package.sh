@@ -19,6 +19,7 @@ cp -f scripts/start.sh scripts/reset_db.sh scripts/deploy.sh "$OUT/" 2>/dev/null
 cp -f README.md "$OUT/" 2>/dev/null || true
 mkdir -p "$OUT/data" "$OUT/database"
 rsync -a database/ "$OUT/database/"
+rsync -a docs/ "$OUT/docs/"
 
 ARCHIVE="dist/setuhaul-${STAMP}.tar.gz"
 tar -czf "$ARCHIVE" -C dist "setuhaul-${STAMP}"

@@ -52,6 +52,11 @@ def api_health():
     return health()
 
 
+docs_dir = Path(__file__).resolve().parents[2] / "docs"
+if docs_dir.exists():
+    app.mount("/docs", StaticFiles(directory=docs_dir), name="docs")
+
+
 static_dir = Path(__file__).resolve().parents[2] / "frontend" / "dist"
 if static_dir.exists():
     app.mount("/assets", StaticFiles(directory=static_dir / "assets"), name="assets")

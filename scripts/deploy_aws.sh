@@ -57,10 +57,13 @@ docker push "$ECR_URI"
 
 echo ""
 echo "Step 6: Registering AWS CloudWatch Dashboard..."
+TMP_DASHBOARD=$(mktemp)
+sed -e "s/ap-south-1/$REGION/g" -e "s/SetuHaul-Stack/$STACK_NAME/g" deploy/cloudwatch-dashboard.json > "$TMP_DASHBOARD"
 aws cloudwatch put-dashboard \
   --dashboard-name "SetuHaul-Operations" \
-  --dashboard-body "file://deploy/cloudwatch-dashboard.json" \
+  --dashboard-body "file://$TMP_DASHBOARD" \
   --region "$REGION" >/dev/null
+rm -f "$TMP_DASHBOARD"
 echo "✅ CloudWatch Dashboard 'SetuHaul-Operations' registered."
 
 echo ""

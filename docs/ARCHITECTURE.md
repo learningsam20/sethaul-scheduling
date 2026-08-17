@@ -172,7 +172,7 @@ flowchart LR
 
 ## 8. AWS Cloud Deployment Architecture
 
-The production environment is hosted on AWS using a CloudFormation template ([`deploy/aws-ec2-stack.yaml`](file:///Users/sameer_j/Documents/coding/fde/project2/deploy/aws-ec2-stack.yaml)):
+The production environment is hosted on AWS using a CloudFormation template ([`deploy/aws-ec2-stack.yaml`](../deploy/aws-ec2-stack.yaml)):
 
 ```mermaid
 flowchart TD

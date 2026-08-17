@@ -44,6 +44,15 @@
         "stat": "Sum",
         "period": 300
       }
+    },
+    {
+      "type": "log",
+      "properties": {
+        "title": "SetuHaul Application Logs",
+        "region": "ap-south-1",
+        "query": "SOURCE '/aws/setuhaul/SetuHaul-Stack' | fields @timestamp, @message | sort @timestamp desc | limit 50",
+        "view": "table"
+      }
     }
   ]
 }

@@ -1,4 +1,4 @@
-# SetuHaul Frontend Portal 🎨⚡
+# SetuHaul App 🎨⚡
 
 > **High-Performance Role-Based Web Application for Freight Exception Handling & Dock Scheduling**
 
@@ -45,7 +45,7 @@ flowchart TD
 
 ## 📊 Analytics & Evaluation Measures Center
 
-Located in the **Analytics** view (`AnalyticsPanel` in [`src/App.tsx`](file:///Users/sameer_j/Documents/coding/fde/project2/frontend/src/App.tsx)), this section renders the **Performance Measures & Calculation Reasoning** grid:
+Located in the **Analytics** view (`AnalyticsPanel` in [`src/App.tsx`](src/App.tsx)), this section renders the **Performance Measures & Calculation Reasoning** grid:
 
 * ⚡ **Time to Resolve the Case**: Live duration vs manual benchmark with mathematical breakdown.
 * 🛡️ **Human Help Needed**: Percentage of cases requiring operations manager takeover.
@@ -84,7 +84,7 @@ npm run preview
 
 ## 🔐 Authentication & API Integration
 
-* **JWT Storage**: Tokens are stored in `localStorage` under `setuhaul_token` and automatically attached to API requests via the `authHeaders()` interceptor in [`src/api.ts`](file:///Users/sameer_j/Documents/coding/fde/project2/frontend/src/api.ts).
+* **JWT Storage**: Tokens are stored in `localStorage` under `setuhaul_token` and automatically attached to API requests via the `authHeaders()` interceptor in [`src/api.ts`](src/api.ts).
 * **Role Guards**: Component trees check `user.role` to restrict unauthorized actions (e.g., driver chat vs ops takeover).
 * **Location Add-On**: The `shareLocation` handler requests native browser GPS coordinates (`navigator.geolocation.getCurrentPosition`) and transmits them to `/api/location/resume` for dual-ETA route calculations.
 

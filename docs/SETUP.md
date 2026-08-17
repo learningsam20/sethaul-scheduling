@@ -154,7 +154,7 @@ docker compose up --build
 
 ## 7. AWS Cloud Deployment (Free Tier)
 
-SetuHaul includes an automated, production-ready AWS CloudFormation stack ([`deploy/aws-ec2-stack.yaml`](file:///Users/sameer_j/Documents/coding/fde/project2/deploy/aws-ec2-stack.yaml)):
+SetuHaul includes an automated, production-ready AWS CloudFormation stack ([`deploy/aws-ec2-stack.yaml`](../deploy/aws-ec2-stack.yaml)):
 
 ### Prerequisites for AWS:
 1. Authenticate with your AWS account:

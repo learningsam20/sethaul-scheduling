@@ -7,6 +7,7 @@ RUN pip install --no-cache-dir -r /app/backend/requirements.txt
 COPY backend /app/backend
 COPY database /app/database
 COPY data /app/data
+COPY docs /app/docs
 COPY frontend/dist /app/frontend/dist
 COPY .env.example /app/.env.example
 
