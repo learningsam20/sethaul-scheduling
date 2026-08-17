@@ -99,3 +99,12 @@ assets/setuhaul_demo_presentation.pdf
 assets/video_frames/
 assets/slide_frames/
 assets/setuhaul_er_diagram_core.png
+
+# Chrome profile data (generated, not source)
+docs/chrome-user-data/
+docs/chrome-profile-screenshots/
+
+# Presentation intermediates
+docs/presentation.html
+docs/presentation.pdf
+docs/generate_screenshots.py

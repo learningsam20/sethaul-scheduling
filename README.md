@@ -10,6 +10,10 @@
 </p>
 
 <p align="center">
+  <strong>Demo Video:</strong> <a href="https://youtu.be/PbZfW4ShMTg">https://youtu.be/PbZfW4ShMTg</a>
+</p>
+
+<p align="center">
   <a href="http://100.27.41.46"><img src="https://img.shields.io/badge/Live_Demo-AWS_EC2-007EC6?style=for-the-badge&logo=amazon-aws" alt="Live Demo" /></a>
   <a href="https://youtu.be/PbZfW4ShMTg"><img src="https://img.shields.io/badge/Video-Demo_on_YouTube-FF0000?style=for-the-badge&logo=youtube" alt="YouTube Demo" /></a>
   <a href="https://us-east-1.console.aws.amazon.com/cloudwatch/home?region=us-east-1#dashboards:name=SetuHaul-Operations"><img src="https://img.shields.io/badge/CloudWatch-Dashboard-FF9900?style=for-the-badge&logo=amazon-cloudwatch" alt="CloudWatch" /></a>
